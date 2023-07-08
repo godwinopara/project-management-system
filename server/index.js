@@ -1,9 +1,13 @@
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema/schema");
+const connectDB = require("./config/db");
 require("dotenv").config();
 
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 app.use(
 	"/graphql",

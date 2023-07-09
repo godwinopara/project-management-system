@@ -5,6 +5,7 @@ const {
 	GraphQLSchema,
 	GraphQLList,
 	GraphQLNonNull,
+	GraphQLEnumType,
 } = require("graphql");
 
 // mongoose Models
@@ -105,6 +106,38 @@ const mutation = new GraphQLObjectType({
 			args: { id: { type: GraphQLNonNull(GraphQLID) } },
 			resolve(parent, args) {
 				return Client.findByIdAndDelete(args.id);
+			},
+		},
+
+		// Projects
+
+		addProject: {
+			type: ProjectType,
+			args: {
+				name: { type: GraphQLNonNull(GraphQLString) },
+				clientId: { type: GraphQLNonNull(GraphQLID) },
+				description: { type: GraphQLNonNull(GraphQLString) },
+				status: {
+					type: new GraphQLEnumType({
+						name: "ProjectStatus",
+						values: {
+							new: { value: "Not Started" },
+							progress: { value: "In Progress" },
+							completed: { value: "Completed" },
+						},
+					}),
+					defaultValue: "Not Started",
+				},
+			},
+			resolve(parent, args) {
+				const project = new Project({
+					name: args.name,
+					clientId: args.clientId,
+					description: args.description,
+					status: args.status,
+				});
+
+				return project.save();
 			},
 		},
 	},

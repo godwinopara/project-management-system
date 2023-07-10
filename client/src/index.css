@@ -10,6 +10,11 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.logo {
+	height: 50px;
+	width: 50px;
+}
+
 .navbar-brand {
 	color: #df3ca6;
 }

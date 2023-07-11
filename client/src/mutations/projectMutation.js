@@ -12,6 +12,7 @@ const ADD_PROJECT = gql`
 			name
 			description
 			status
+			clientId
 			client {
 				id
 				name
@@ -27,8 +28,6 @@ const DELETE_PROJECT = gql`
 		deleteProject(id: $id) {
 			id
 			name
-			email
-			phone
 		}
 	}
 `;
